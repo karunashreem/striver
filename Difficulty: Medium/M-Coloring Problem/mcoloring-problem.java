@@ -1,5 +1,5 @@
 class Solution {
-    boolean isSafe(int node, boolean[][] graph, int[] color, int currcolor, int V){
+    boolean isPossible(int node, boolean[][] graph, int[] color,int currcolor, int V){
         for(int i=0; i<V; i++){
             if(graph[node][i]==true && color[i]==currcolor){
                 return false;
@@ -9,8 +9,9 @@ class Solution {
     }
     boolean solve(int node, boolean[][] graph, int[] color, int m, int V){
         if(node==V) return true;
+        
         for(int i=1; i<=m; i++){
-            if(isSafe(node, graph, color, i, V)){
+            if(isPossible(node, graph, color, i, V)){
                 color[node]=i;
                 if(solve(node+1, graph, color, m, V)){
                     return true;
@@ -28,10 +29,9 @@ class Solution {
             int v= edge[1];
             
             graph[u][v]= true;
-            graph[v][u]= true;
+            graph[v][u]=true;
         }
-        int[] color= new int[V];
+        int color[]=new int[V];
         return solve(0, graph, color, m, V);
-        
     }
-} 
+}
