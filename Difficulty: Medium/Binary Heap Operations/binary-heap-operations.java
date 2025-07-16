@@ -19,27 +19,29 @@ class MinHeap {
     // next minimum value at first index.
     int extractMin() {
         // Your code here.
-         if(heap_size<1)return -1;
-        int largest=harr[0];
+        if(heap_size<1) return -1;
+        int min= harr[0];
+        
         harr[0]=harr[heap_size-1];
         heap_size--;
         MinHeapify(0);
-        return largest;
+        return min;
     }
+    
 
     // Function to insert a value in Heap.
     void insertKey(int k) {
         // Your code here.
-         if(heap_size==capacity)return;
-       heap_size++;
-       decreaseKey(heap_size-1,k);
+        if(heap_size==capacity) return;
+        heap_size++;
+        decreaseKey(heap_size-1, k);
     }
 
     // Function to delete a key at ith index.
     void deleteKey(int i) {
         // Your code here.
         if(i<heap_size){
-            decreaseKey(i,-1);
+            decreaseKey(i,-1 );
             extractMin();
         }
     }
