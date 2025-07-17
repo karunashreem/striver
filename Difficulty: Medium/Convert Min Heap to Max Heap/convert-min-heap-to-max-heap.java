@@ -4,12 +4,12 @@ class Solution {
     static void convertMinToMaxHeap(int N, int arr[]) {
         // code here
         for(int i=(N-1)/2; i>=0; i--){
-            heapify( i, arr, N);
+            heapify(arr, i, N);
         }
     }
-    static void heapify(int idx, int[] arr, int n){
+    static void heapify(int[] arr, int idx, int n){
         int largest=idx;
-        int left= idx*2 +1;
+        int left= idx*2+1;
         int right=idx*2+2;
         if(left<n && arr[left]>arr[largest]){
             largest=left;
@@ -17,16 +17,14 @@ class Solution {
         if(right<n && arr[right]>arr[largest]){
             largest=right;
         }
-        if(idx!=largest){
-            swap(arr, idx, largest);
-            heapify(largest, arr, n);
+        if(largest!=idx){
+            swap(arr, largest, idx);
+            heapify(arr, largest, n);
         }
     }
-    static void swap(int[] arr, int idx, int largest){
-        int temp= arr[idx];
-        arr[idx]=arr[largest];
-        arr[largest]= temp;
-        return;
+    static void swap(int[] arr, int i, int j){
+        int temp= arr[i];
+        arr[i]= arr[j];
+        arr[j]=temp;
     }
-    
 }
