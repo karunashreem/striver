@@ -1,48 +1,44 @@
+
+
 class Solution {
     double fractionalKnapsack(int[] values, int[] weights, int W) {
-        // Create array of items with value and weight
-        Item[] items = new Item[values.length];
+        List<Item> sortedVal = new ArrayList<>();
+        
         for (int i = 0; i < values.length; i++) {
-            items[i] = new Item(values[i], weights[i]);
+            double rat = (double) values[i] / weights[i]; // Fix: Use double division
+            sortedVal.add(new Item(values[i], weights[i], rat)); // Fix: Create Item object
         }
         
-        // Sort items by value/weight ratio in descending order
-        Arrays.sort(items, new Comparator<Item>() {
-            public int compare(Item a, Item b) {
-                double ratioA = (double)a.value / a.weight;
-                double ratioB = (double)b.value / b.weight;
-                return Double.compare(ratioB, ratioA); // descending order
-            }
-        });
+        Collections.sort(sortedVal, (a, b) -> Double.compare(b.rat, a.rat)); // Fix: Collections.sort
         
-        double maxValue = 0.0;
-        int remainingCapacity = W;
+        double max = 0.00;
+        int remWeight = W;
         
-        for (Item item : items) {
-            if (remainingCapacity <= 0) break;
+        for (Item item : sortedVal) {
+            if (remWeight == 0) 
+                return max;
             
-            if (item.weight <= remainingCapacity) {
-                // Take whole item
-                maxValue += item.value;
-                remainingCapacity -= item.weight;
+            if (item.weight <= remWeight) {
+                max += item.value;
+                remWeight -= item.weight;
             } else {
-                // Take fraction of item
-                double fraction = (double)remainingCapacity / item.weight;
-                maxValue += item.value * fraction;
-                remainingCapacity = 0;
+                max += ((double) item.value / item.weight) * remWeight; // Fix: Correct fractional calculation
+                remWeight = 0;
             }
         }
         
-        return maxValue;
+        return max; // Ensure method always returns
     }
+}
+
+class Item {
+    int value;
+    int weight;
+    double rat;
     
-    class Item {
-        int value;
-        int weight;
-        
-        Item(int value, int weight) {
-            this.value = value;
-            this.weight = weight;
-        }
+    Item(int val, int wei, double ratio) {
+        this.value = val;
+        this.weight = wei;
+        this.rat = ratio; // Fix: Correct typo (ration → ratio)
     }
 }
