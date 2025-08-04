@@ -1,44 +1,37 @@
-
-
 class Solution {
     double fractionalKnapsack(int[] values, int[] weights, int W) {
-        List<Item> sortedVal = new ArrayList<>();
-        
-        for (int i = 0; i < values.length; i++) {
-            double rat = (double) values[i] / weights[i]; // Fix: Use double division
-            sortedVal.add(new Item(values[i], weights[i], rat)); // Fix: Create Item object
+        // code here
+        int n= values.length;
+        List<item> list= new ArrayList<>();
+        for(int i=0; i<n; i++){
+            list.add(new item(weights[i], values[i], (double) values[i]/weights[i]));
         }
+        Collections.sort(list, (a, b) -> Double.compare(b.ratio, a.ratio));
         
-        Collections.sort(sortedVal, (a, b) -> Double.compare(b.rat, a.rat)); // Fix: Collections.sort
-        
-        double max = 0.00;
-        int remWeight = W;
-        
-        for (Item item : sortedVal) {
-            if (remWeight == 0) 
-                return max;
-            
-            if (item.weight <= remWeight) {
-                max += item.value;
-                remWeight -= item.weight;
-            } else {
-                max += ((double) item.value / item.weight) * remWeight; // Fix: Correct fractional calculation
-                remWeight = 0;
+        int i=0;
+        double total=0.0;
+        while(i<list.size() &&  W>0){
+            item i1= list.get(i);
+            if(i1.weight<=W){
+                total+=i1.value;
+                W-=i1.weight;
+            }else{
+                total+= (i1.ratio)*W;
+                W=0;
+                break;
             }
+            i++;
         }
-        
-        return max; // Ensure method always returns
+        return total;
     }
 }
-
-class Item {
-    int value;
+class item{
     int weight;
-    double rat;
-    
-    Item(int val, int wei, double ratio) {
-        this.value = val;
-        this.weight = wei;
-        this.rat = ratio; // Fix: Correct typo (ration → ratio)
+    int value;
+    double ratio;
+    item(int w, int v, double r){
+        weight=w;
+        value= v;
+        ratio=r;
     }
 }
