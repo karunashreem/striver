@@ -1,24 +1,23 @@
 class Solution {
     public int celebrity(int mat[][]) {
         // code here
-        int n=mat.length;
-        int[] knowme= new int[n];
-        Arrays.fill(knowme, 0);
-        int[] iknow=new int[n]; 
-        Arrays.fill(iknow, 0);
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
+        int[] knows= new int[mat.length];
+        int[] knownby= new int[mat.length];
+        
+        for(int i=0; i<mat.length; i++){
+            for(int j=0; j<mat[0].length; j++){
                 if(mat[i][j]==1){
-                    knowme[j]++;
-                    iknow[i]++;
+                    knows[i]++;
+                    knownby[j]++;
                 }
             }
         }
-        for(int i=0; i<n; i++){
-            if(knowme[i]==n && iknow[i]==1){
-                return i;
+        int res=-1;
+        for(int i=0; i<knows.length; i++){
+            if(knows[i]==1 && knownby[i]==knows.length){
+                res=i;
             }
         }
-        return -1;
+        return res;
     }
 }
