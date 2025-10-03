@@ -1,5 +1,5 @@
 class Solution {
-    void merge(int[] arr, int l, int m, int r){
+    void merge(int arr[], int l, int m, int r){
         ArrayList<Integer> temp= new ArrayList<>();
         int left= l;
         int right=m+1;
@@ -12,30 +12,26 @@ class Solution {
                 right++;
             }
         }
-        
         while(left<=m){
             temp.add(arr[left]);
             left++;
         }
         while(right<=r){
             temp.add(arr[right]);
-                right++;
+            right++;
         }
         for(int i=l; i<=r; i++){
-            arr[i]= temp.get(i-l);
+            arr[i]=temp.get(i-l);
         }
-        
     }
     void mergeSort(int arr[], int l, int r) {
         // code here
         if(l<r){
-            int mid= (l+r)/2;
-            mergeSort(arr, l, mid);
-            mergeSort(arr, mid+1, r);
-            
-            merge(arr, l, mid, r);
+            int m= (l+r)/2;
+            mergeSort(arr, l, m);
+            mergeSort(arr, m+1, r);
+            merge(arr, l, m, r);
         }
-        
-        
+        return;
     }
 }
