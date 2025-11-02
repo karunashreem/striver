@@ -2,16 +2,16 @@ class Solution {
     void selectionSort(int[] arr) {
         // code here
         for(int i=0; i<arr.length; i++){
-            int minInd=i;
+            int min= i;
             for(int j=i+1; j<arr.length; j++){
-                if(arr[minInd]>arr[j]){
-                    minInd=j;
+                if(arr[min]> arr[j]){
+                    min= j;
                 }
             }
-            int temp=arr[minInd];
-            arr[minInd]= arr[i];
-            arr[i]=temp;
+            int temp= arr[min];
+            arr[min]= arr[i];
+            arr[i]= temp;
         }
-        return;
+        
     }
 }
