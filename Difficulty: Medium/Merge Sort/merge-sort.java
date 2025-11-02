@@ -1,36 +1,32 @@
 class Solution {
-    void merge(int arr[], int l, int m, int r){
-        ArrayList<Integer> temp= new ArrayList<>();
-        int left= l;
-        int right=m+1;
-        while(left<=m && right<=r){
+    void merge(int[] arr, int l, int m, int r){
+        int left=l, mid=m, right=m+1;
+        ArrayList<Integer> list= new ArrayList<>();
+        while(left<=mid && right<=r){
             if(arr[left]<=arr[right]){
-                temp.add(arr[left]);
-                left++;
+                list.add(arr[left++]);
             }else{
-                temp.add(arr[right]);
-                right++;
+                list.add(arr[right++]);
             }
         }
-        while(left<=m){
-            temp.add(arr[left]);
-            left++;
+        while(left<=mid){
+            list.add(arr[left++]);
         }
         while(right<=r){
-            temp.add(arr[right]);
-            right++;
+            list.add(arr[right++]);
         }
-        for(int i=l; i<=r; i++){
-            arr[i]=temp.get(i-l);
+        
+        for(int i=0; i<list.size(); i++){
+            arr[i+l]= list.get(i);
         }
     }
     void mergeSort(int arr[], int l, int r) {
         // code here
         if(l<r){
-            int m= (l+r)/2;
-            mergeSort(arr, l, m);
-            mergeSort(arr, m+1, r);
-            merge(arr, l, m, r);
+            int mid= l+(r-l)/2;
+            mergeSort(arr, l, mid);
+            mergeSort(arr, mid+1, r);
+            merge(arr, l, mid, r);
         }
         return;
     }
